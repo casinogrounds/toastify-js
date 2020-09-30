@@ -39,8 +39,9 @@
       this.toastElement = null;
 
       // Validating the options
-      this.options.text = options.text || "Hi there!"; // Display message
-      this.options.description = options.description || "Hi there!"; // Display message
+      this.options.title = options.title || "Hi there!"; // Display title
+      this.options.description = options.description || "Hi there!"; // Display description
+      this.options.gwenCoinAmount = options.gwenCoinAmount; // Gwen coin amount
       this.options.node = options.node // Display content as node
       this.options.duration = options.duration === 0 ? 0 : options.duration || 3000; // Display duration
       this.options.selector = options.selector; // Parent selector
@@ -74,9 +75,6 @@
 
       // Creating the DOM object
       var divElement = document.createElement("div");
-      var heading = document.createElement('h4');
-      var description = document.createElement('p');
-      var achievementInfoContainer = document.createElement('div');
       var avatarContainer = document.createElement('div');
 
       divElement.className = "toastify on " + this.options.className;
@@ -127,14 +125,17 @@
         // If we have a valid node, we insert it
         divElement.appendChild(this.options.node)
       } else {
-        heading.innerHTML = this.options.text;
-        description.innerHTML = this.options.description;
+        var documentFragment = document.createRange().createContextualFragment(`
+        <div class='achievemenet-info-container'>
+          <h4>${this.options.title}</h4>
+          <div class="description-container">
+            <img class='gem-icon' src='https://res.cloudinary.com/casinogrounds/image/upload/v1597056620/reactapp/achievements/points.svg' />
+            <span class="coin-amount">${this.options.gwenCoinAmount}</span>
+            <span class="achievement-description">${this.options.description}</span>
+          </div>
+        </div>`)
 
-        achievementInfoContainer.appendChild(heading);
-        achievementInfoContainer.appendChild(description);
-        achievementInfoContainer.className = 'achievemenet-info-container';
-
-        divElement.appendChild(achievementInfoContainer);
+        divElement.appendChild(documentFragment);
 
       }
 

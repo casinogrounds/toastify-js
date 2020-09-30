@@ -6,7 +6,7 @@
  * Copyright (C) 2018 Varun A P
  */
 
- @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&family=Play&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Play:wght@400;700&display=swap');
 
 .toastify {
     padding: 20px 5px;
@@ -33,14 +33,30 @@ h1, h2, h3, h4, h5, h6, p {
 
 h4 {
     font-family: 'Play', sans-serif;
+    font-weight: 700;
     font-size: 14px;
 }
 
-p {
+.achievement-description {
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
     font-size: 12px;
     margin-top: 2px;
+}
+
+.coin-amount {
+    font-family: 'Play', sans-serif;
+    font-weight: 700;
+		font-size: 12px;
+}
+
+.gem-icon {
+	width: 13px;
+	transform: translate(3px, 3px);
+}
+
+.description-container {
+	transform: translateX(-4px)
 }
 
 .toastify.on {
