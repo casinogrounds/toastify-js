@@ -5,20 +5,20 @@
  *
  * Copyright (C) 2018 Varun A P
  */
-(function(root, factory) {
-  if (typeof module === "object" && module.exports) {
+(function (root, factory) {
+  if (typeof module === 'object' && module.exports) {
     module.exports = factory();
   } else {
     root.Toastify = factory();
   }
-})(this, function(global) {
+})(this, function (global) {
   // Object initialization
-  var Toastify = function(options) {
+  var Toastify = function (options) {
       // Returning a new init object
       return new Toastify.lib.init(options);
     },
     // Library version
-    version = "1.9.2";
+    version = '1.9.2';
 
   // Defining the prototype of the object
   Toastify.lib = Toastify.prototype = {
@@ -27,7 +27,7 @@
     constructor: Toastify,
 
     // Initializing the object with required parameters
-    init: function(options) {
+    init: function (options) {
       // Verifying and validating the input object
       if (!options) {
         options = {};
@@ -39,91 +39,101 @@
       this.toastElement = null;
 
       // Validating the options
-      this.options.text = options.text || "Hi there!"; // Display text
-      this.options.title = options.title || "Hi there!"; // Display title
+      this.options.text = options.text || 'Hi there!'; // Display text
+      this.options.title = options.title || 'Hi there!'; // Display title
       this.options.gwenCoinAmount = options.gwenCoinAmount; // Gwen coin amount
-      this.options.node = options.node // Display content as node
-      this.options.duration = options.duration === 0 ? 0 : options.duration || 3000; // Display duration
+      this.options.node = options.node; // Display content as node
+      this.options.duration =
+        options.duration === 0 ? 0 : options.duration || 3000; // Display duration
       this.options.selector = options.selector; // Parent selector
-      this.options.callback = options.callback || function() {}; // Callback after display
+      this.options.callback = options.callback || function () {}; // Callback after display
       this.options.destination = options.destination; // On-click destination
       this.options.newWindow = options.newWindow || false; // Open destination in new window
       this.options.close = options.close || false; // Show toast close icon
-      this.options.gravity = options.gravity === "bottom" ? "toastify-bottom" : "toastify-top"; // toast position - top or bottom
+      this.options.gravity =
+        options.gravity === 'bottom' ? 'toastify-bottom' : 'toastify-top'; // toast position - top or bottom
       this.options.positionLeft = options.positionLeft || false; // toast position - left or right
       this.options.position = options.position || ''; // toast position - left or right
       this.options.backgroundColor = options.backgroundColor; // toast background color
-      this.options.avatar = options.avatar || ""; // img element src - url or a path
-      this.options.className = options.className || ""; // additional class names for the toast
-      this.options.stopOnFocus = options.stopOnFocus === undefined? true: options.stopOnFocus; // stop timeout on focus
+      this.options.avatar = options.avatar || ''; // img element src - url or a path
+      this.options.className = options.className || ''; // additional class names for the toast
+      this.options.stopOnFocus =
+        options.stopOnFocus === undefined ? true : options.stopOnFocus; // stop timeout on focus
       this.options.onClick = options.onClick; // Callback after click
 
       const normalOffset = { x: 0, y: 0 };
 
-      this.options.offset = options.offset || normalOffset // toast offset
+      this.options.offset = options.offset || normalOffset; // toast offset
 
       // Returning the current object for chaining functions
       return this;
     },
 
     // Building the DOM element
-    buildToast: function() {
+    buildToast: function () {
       // Validating if the options are defined
       if (!this.options) {
-        throw "Toastify is not initialized";
+        throw 'Toastify is not initialized';
       }
 
       // Creating the DOM object
-      var divElement = document.createElement("div");
+      var divElement = document.createElement('div');
       var avatarContainer = document.createElement('div');
 
-      divElement.className = "toastify on " + this.options.className;
+      divElement.className = 'toastify on ' + this.options.className;
 
       // Positioning toast to left or right or center
       if (!!this.options.position) {
-        divElement.className += " toastify-" + this.options.position;
+        divElement.className += ' toastify-' + this.options.position;
       } else {
         // To be depreciated in further versions
         if (this.options.positionLeft === true) {
-          divElement.className += " toastify-left";
-          console.warn('Property `positionLeft` will be depreciated in further versions. Please use `position` instead.')
+          divElement.className += ' toastify-left';
+          console.warn(
+            'Property `positionLeft` will be depreciated in further versions. Please use `position` instead.'
+          );
         } else {
           // Default position
-          divElement.className += " toastify-right";
+          divElement.className += ' toastify-right';
         }
       }
 
       // Assigning gravity of element
-      divElement.className += " " + this.options.gravity;
+      divElement.className += ' ' + this.options.gravity;
 
       if (this.options.backgroundColor) {
         divElement.style.background = this.options.backgroundColor;
       }
 
       // Adding the achievement icon
-        if (this.options.avatar !== "") {
-          var avatarElement = document.createElement("img");
-          avatarElement.src = this.options.avatar;
+      if (this.options.avatar !== '') {
+        var avatarElement = document.createElement('img');
+        avatarElement.src = this.options.avatar;
 
-          avatarElement.className = "toastify-avatar";
+        avatarElement.className = 'toastify-avatar';
 
-          avatarContainer.appendChild(avatarElement);
-          avatarContainer.className = 'avatar-container';
+        avatarContainer.appendChild(avatarElement);
+        avatarContainer.className = 'avatar-container';
 
-          if (this.options.position == "left" || this.options.positionLeft === true) {
-            // Adding close icon on the left of content
-            divElement.appendChild(avatarContainer);
-          } else {
-            // Adding close icon on the right of content
-            divElement.insertAdjacentElement("afterbegin", avatarContainer);
-          }
+        if (
+          this.options.position == 'left' ||
+          this.options.positionLeft === true
+        ) {
+          // Adding close icon on the left of content
+          divElement.appendChild(avatarContainer);
+        } else {
+          // Adding close icon on the right of content
+          divElement.insertAdjacentElement('afterbegin', avatarContainer);
         }
-    
-      // Adding the toast message/node
-      if (this.options.node && this.options.node.nodeType === Node.ELEMENT_NODE) {
+      }
 
+      // Adding the toast message/node
+      if (
+        this.options.node &&
+        this.options.node.nodeType === Node.ELEMENT_NODE
+      ) {
         // If we have a valid node, we insert it
-        divElement.appendChild(this.options.node)
+        divElement.appendChild(this.options.node);
       } else {
         var documentFragment = document.createRange().createContextualFragment(`
         <div class='achievemenet-info-container'>
@@ -133,24 +143,24 @@
             <span class="coin-amount">${this.options.gwenCoinAmount}</span>
             <span class="achievement-title">${this.options.title}</span>
           </div>
-        </div>`)
+        </div>`);
 
         divElement.appendChild(documentFragment);
-
       }
 
       // Adding a close icon to the toast
       if (this.options.close === true) {
         // Create a span for close element
-        var closeElement = document.createElement("img");
-        closeElement.src = 'https://res.cloudinary.com/casinogrounds/image/upload/v1601460887/reactapp/achievements/group-3.svg';
+        var closeElement = document.createElement('img');
+        closeElement.src =
+          'https://res.cloudinary.com/casinogrounds/image/upload/v1601460887/reactapp/achievements/group-3.svg';
 
-        closeElement.className = "toast-close";
+        closeElement.className = 'toast-close';
 
         // Triggering the removal of toast from DOM on close click
         closeElement.addEventListener(
-          "click",
-          function(event) {
+          'click',
+          function (event) {
             event.stopPropagation();
             this.removeElement(this.toastElement);
             window.clearTimeout(this.toastElement.timeOutValue);
@@ -162,9 +172,13 @@
 
         // Adding the close icon to the toast element
         // Display on the right if screen width is less than or equal to 360px
-        if ((this.options.position == "left" || this.options.positionLeft === true) && width > 360) {
+        if (
+          (this.options.position == 'left' ||
+            this.options.positionLeft === true) &&
+          width > 360
+        ) {
           // Adding close icon on the left of content
-          divElement.insertAdjacentElement("afterbegin", closeElement);
+          divElement.insertAdjacentElement('afterbegin', closeElement);
         } else {
           // Adding close icon on the right of content
           divElement.appendChild(closeElement);
@@ -175,35 +189,26 @@
       if (this.options.stopOnFocus && this.options.duration > 0) {
         const self = this;
         // stop countdown
-        divElement.addEventListener(
-          "mouseover",
-          function(event) {
-            window.clearTimeout(divElement.timeOutValue);
-          }
-        )
+        divElement.addEventListener('mouseover', function (event) {
+          window.clearTimeout(divElement.timeOutValue);
+        });
         // add back the timeout
-        divElement.addEventListener(
-          "mouseleave",
-          function() {
-            divElement.timeOutValue = window.setTimeout(
-              function() {
-                // Remove the toast from DOM
-                self.removeElement(divElement);
-              },
-              self.options.duration
-            )
-          }
-        )
+        divElement.addEventListener('mouseleave', function () {
+          divElement.timeOutValue = window.setTimeout(function () {
+            // Remove the toast from DOM
+            self.removeElement(divElement);
+          }, self.options.duration);
+        });
       }
-      
+
       // Adding an on-click destination path
-      if (typeof this.options.destination !== "undefined") {
+      if (typeof this.options.destination !== 'undefined') {
         divElement.addEventListener(
-          "click",
-          function(event) {
+          'click',
+          function (event) {
             event.stopPropagation();
             if (this.options.newWindow === true) {
-              window.open(this.options.destination, "_blank");
+              window.open(this.options.destination, '_blank');
             } else {
               window.location = this.options.destination;
             }
@@ -211,27 +216,28 @@
         );
       }
 
-      if (typeof this.options.onClick === "function" && typeof this.options.destination === "undefined") {
+      if (
+        typeof this.options.onClick === 'function' &&
+        typeof this.options.destination === 'undefined'
+      ) {
         divElement.addEventListener(
-          "click",
-          function(event) {
+          'click',
+          function (event) {
             event.stopPropagation();
-            this.options.onClick();            
+            this.options.onClick();
           }.bind(this)
         );
       }
 
       // Adding offset
-      if(typeof this.options.offset === "object") {
+      if (typeof this.options.offset === 'object') {
+        var x = getAxisOffsetAValue('x', this.options);
+        var y = getAxisOffsetAValue('y', this.options);
 
-        var x = getAxisOffsetAValue("x", this.options);
-        var y = getAxisOffsetAValue("y", this.options);
-        
-        const xOffset = this.options.position == "left" ? x : `-${x}`;
-        const yOffset = this.options.gravity == "toastify-top" ? y : `-${y}`;
+        const xOffset = this.options.position == 'left' ? x : `-${x}`;
+        const yOffset = this.options.gravity == 'toastify-top' ? y : `-${y}`;
 
         divElement.style.transform = `translate(${xOffset}, ${yOffset})`;
-
       }
 
       // Returning the generated element
@@ -239,13 +245,13 @@
     },
 
     // Displaying the toast
-    showToast: function() {
+    showToast: function () {
       // Creating the DOM object for the toast
       this.toastElement = this.buildToast();
 
       // Getting the root element to with the toast needs to be added
       var rootElement;
-      if (typeof this.options.selector === "undefined") {
+      if (typeof this.options.selector === 'undefined') {
         rootElement = document.body;
       } else {
         rootElement = document.getElementById(this.options.selector);
@@ -253,7 +259,7 @@
 
       // Validating if root element is present in DOM
       if (!rootElement) {
-        throw "Root element is not defined";
+        throw 'Root element is not defined';
       }
 
       // Adding the DOM element
@@ -264,7 +270,7 @@
 
       if (this.options.duration > 0) {
         this.toastElement.timeOutValue = window.setTimeout(
-          function() {
+          function () {
             // Remove the toast from DOM
             this.removeElement(this.toastElement);
           }.bind(this),
@@ -276,7 +282,7 @@
       return this;
     },
 
-    hideToast: function() {
+    hideToast: function () {
       if (this.toastElement.timeOutValue) {
         clearTimeout(this.toastElement.timeOutValue);
       }
@@ -284,14 +290,14 @@
     },
 
     // Removing the element from the DOM
-    removeElement: function(toastElement) {
+    removeElement: function (toastElement) {
       // Hiding the element
       // toastElement.classList.remove("on");
-      toastElement.className = toastElement.className.replace(" on", "");
+      toastElement.className = toastElement.className.replace(' on', '');
 
       // Removing the element from DOM after transition end
       window.setTimeout(
-        function() {
+        function () {
           // remove options node if any
           if (this.options.node && this.options.node.parentNode) {
             this.options.node.parentNode.removeChild(this.options.node);
@@ -314,8 +320,7 @@
   };
 
   // Positioning the toasts on the DOM
-  Toastify.reposition = function() {
-
+  Toastify.reposition = function () {
     // Top margins with gravity
     var topLeftOffsetSize = {
       top: 15,
@@ -331,21 +336,21 @@
     };
 
     // Get all toast messages on the DOM
-    var allToasts = document.getElementsByClassName("toastify");
+    var allToasts = document.getElementsByClassName('toastify');
 
     var classUsed;
 
     // Modifying the position of each toast element
     for (var i = 0; i < allToasts.length; i++) {
       // Getting the applied gravity
-      if (containsClass(allToasts[i], "toastify-top") === true) {
-        classUsed = "toastify-top";
+      if (containsClass(allToasts[i], 'toastify-top') === true) {
+        classUsed = 'toastify-top';
       } else {
-        classUsed = "toastify-bottom";
+        classUsed = 'toastify-bottom';
       }
 
       var height = allToasts[i].offsetHeight;
-      classUsed = classUsed.substr(9, classUsed.length-1)
+      classUsed = classUsed.substr(9, classUsed.length - 1);
       // Spacing between toasts
       var offset = 15;
 
@@ -354,18 +359,18 @@
       // Show toast in center if screen with less than or qual to 360px
       if (width <= 360) {
         // Setting the position
-        allToasts[i].style[classUsed] = offsetSize[classUsed] + "px";
+        allToasts[i].style[classUsed] = offsetSize[classUsed] + 'px';
 
         offsetSize[classUsed] += height + offset;
       } else {
-        if (containsClass(allToasts[i], "toastify-left") === true) {
+        if (containsClass(allToasts[i], 'toastify-left') === true) {
           // Setting the position
-          allToasts[i].style[classUsed] = topLeftOffsetSize[classUsed] + "px";
+          allToasts[i].style[classUsed] = topLeftOffsetSize[classUsed] + 'px';
 
           topLeftOffsetSize[classUsed] += height + offset;
         } else {
           // Setting the position
-          allToasts[i].style[classUsed] = topRightOffsetSize[classUsed] + "px";
+          allToasts[i].style[classUsed] = topRightOffsetSize[classUsed] + 'px';
 
           topRightOffsetSize[classUsed] += height + offset;
         }
@@ -378,29 +383,23 @@
 
   // Helper function to get offset.
   function getAxisOffsetAValue(axis, options) {
-
-    if(options.offset[axis]) {
-      if(isNaN(options.offset[axis])) {
+    if (options.offset[axis]) {
+      if (isNaN(options.offset[axis])) {
         return options.offset[axis];
-      }
-      else {
+      } else {
         return options.offset[axis] + 'px';
       }
     }
 
     return '0px';
-
   }
 
   function containsClass(elem, yourClass) {
-    if (!elem || typeof yourClass !== "string") {
+    if (!elem || typeof yourClass !== 'string') {
       return false;
     } else if (
       elem.className &&
-      elem.className
-        .trim()
-        .split(/\s+/gi)
-        .indexOf(yourClass) > -1
+      elem.className.trim().split(/\s+/gi).indexOf(yourClass) > -1
     ) {
       return true;
     } else {
