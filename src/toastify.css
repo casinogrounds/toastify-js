@@ -37,7 +37,7 @@ h4 {
     font-size: 14px;
 }
 
-.achievement-description {
+.achievement-title {
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
     font-size: 12px;
@@ -55,7 +55,7 @@ h4 {
 	transform: translate(3px, 3px);
 }
 
-.description-container {
+.title-container {
 	transform: translateX(-4px)
 }
 

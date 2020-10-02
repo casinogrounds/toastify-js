@@ -39,8 +39,8 @@
       this.toastElement = null;
 
       // Validating the options
+      this.options.text = options.text || "Hi there!"; // Display text
       this.options.title = options.title || "Hi there!"; // Display title
-      this.options.description = options.description || "Hi there!"; // Display description
       this.options.gwenCoinAmount = options.gwenCoinAmount; // Gwen coin amount
       this.options.node = options.node // Display content as node
       this.options.duration = options.duration === 0 ? 0 : options.duration || 3000; // Display duration
@@ -127,11 +127,11 @@
       } else {
         var documentFragment = document.createRange().createContextualFragment(`
         <div class='achievemenet-info-container'>
-          <h4>${this.options.title}</h4>
-          <div class="description-container">
+          <h4>${this.options.text}</h4>
+          <div class="title-container">
             <img class='gem-icon' src='https://res.cloudinary.com/casinogrounds/image/upload/v1597056620/reactapp/achievements/points.svg' />
             <span class="coin-amount">${this.options.gwenCoinAmount}</span>
-            <span class="achievement-description">${this.options.description}</span>
+            <span class="achievement-title">${this.options.title}</span>
           </div>
         </div>`)
 
