@@ -39,7 +39,9 @@
       this.toastElement = null;
 
       // Validating the options
-      this.options.text = options.text || "Hi there!"; // Display message
+      this.options.text = options.text || "Hi there!"; // Display text
+      this.options.title = options.title || "Hi there!"; // Display title
+      this.options.gwenCoinAmount = options.gwenCoinAmount; // Gwen coin amount
       this.options.node = options.node // Display content as node
       this.options.duration = options.duration === 0 ? 0 : options.duration || 3000; // Display duration
       this.options.selector = options.selector; // Parent selector
@@ -73,6 +75,8 @@
 
       // Creating the DOM object
       var divElement = document.createElement("div");
+      var avatarContainer = document.createElement('div');
+
       divElement.className = "toastify on " + this.options.className;
 
       // Positioning toast to left or right or center
@@ -96,34 +100,50 @@
         divElement.style.background = this.options.backgroundColor;
       }
 
-      // Adding the toast message/node
-      if (this.options.node && this.options.node.nodeType === Node.ELEMENT_NODE) {
-        // If we have a valid node, we insert it
-        divElement.appendChild(this.options.node)
-      } else {
-        divElement.innerHTML = this.options.text;
-
+      // Adding the achievement icon
         if (this.options.avatar !== "") {
           var avatarElement = document.createElement("img");
           avatarElement.src = this.options.avatar;
 
           avatarElement.className = "toastify-avatar";
 
+          avatarContainer.appendChild(avatarElement);
+          avatarContainer.className = 'avatar-container';
+
           if (this.options.position == "left" || this.options.positionLeft === true) {
             // Adding close icon on the left of content
-            divElement.appendChild(avatarElement);
+            divElement.appendChild(avatarContainer);
           } else {
             // Adding close icon on the right of content
-            divElement.insertAdjacentElement("afterbegin", avatarElement);
+            divElement.insertAdjacentElement("afterbegin", avatarContainer);
           }
         }
+    
+      // Adding the toast message/node
+      if (this.options.node && this.options.node.nodeType === Node.ELEMENT_NODE) {
+
+        // If we have a valid node, we insert it
+        divElement.appendChild(this.options.node)
+      } else {
+        var documentFragment = document.createRange().createContextualFragment(`
+        <div class='achievemenet-info-container'>
+          <h4>${this.options.text}</h4>
+          <div class="title-container">
+            <img class='gem-icon' src='https://res.cloudinary.com/casinogrounds/image/upload/v1597056620/reactapp/achievements/points.svg' />
+            <span class="coin-amount">${this.options.gwenCoinAmount}</span>
+            <span class="achievement-title">${this.options.title}</span>
+          </div>
+        </div>`)
+
+        divElement.appendChild(documentFragment);
+
       }
 
       // Adding a close icon to the toast
       if (this.options.close === true) {
         // Create a span for close element
-        var closeElement = document.createElement("span");
-        closeElement.innerHTML = "&#10006;";
+        var closeElement = document.createElement("img");
+        closeElement.src = 'https://res.cloudinary.com/casinogrounds/image/upload/v1601460887/reactapp/achievements/group-3.svg';
 
         closeElement.className = "toast-close";
 
