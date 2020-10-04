@@ -71,7 +71,8 @@ h4 {
 }
 
 .toast-close {
-  opacity: 1;
+  opacity: 1 !important;
+  max-width: fit-content !important;
   padding: 0 5px;
   transform: translate(-13px, -8px);
 }
