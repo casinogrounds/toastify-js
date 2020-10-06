@@ -10,6 +10,7 @@
 
 .toastify {
   padding: 20px 5px;
+  margin-top: 60px;
   color: #ffffff;
   display: grid;
   grid-template-columns: 60px 1fr 10px;
